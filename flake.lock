@@ -63,11 +63,28 @@
         "type": "indirect"
       }
     },
+    "qt515": {
+      "locked": {
+        "lastModified": 1595644020,
+        "narHash": "sha256-wBdWcvkonnHQnlaH1X+U6UuLXEr1Qv65FgounRNMxRY=",
+        "owner": "nrdxp",
+        "repo": "nixpkgs",
+        "rev": "2d079773acfe21b5faf2b720ac19660baefa8ef4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nrdxp",
+        "ref": "qt515",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home": "home",
         "master": "master",
-        "nixos": "nixos"
+        "nixos": "nixos",
+        "qt515": "qt515"
       }
     }
   },
