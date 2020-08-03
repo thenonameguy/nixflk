@@ -59,6 +59,13 @@ let
               map overlay override;
           };
 
+          qute.nixpkgs.overlays = let inherit (pkgset) qt515Pkgs; in
+            [
+              (final: prev: {
+                qutebrowser = qt515Pkgs.qutebrowser;
+              })
+            ];
+
           local = import "${toString ./.}/${hostName}.nix";
 
           # Everything in `./modules/list.nix`.
@@ -66,7 +73,7 @@ let
             attrValues (removeAttrs self.nixosModules [ "profiles" ]);
 
         in
-        flakeModules ++ [ core global local home-manager overrides ];
+        flakeModules ++ [ core global local home-manager overrides qute ];
 
     };
 

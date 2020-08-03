@@ -6,9 +6,10 @@
       master.url = "nixpkgs/master";
       nixos.url = "nixpkgs/release-20.03";
       home.url = "github:rycee/home-manager/bqv-flakes";
+      qt515.url = "github:nrdxp/nixpkgs/qt515";
     };
 
-  outputs = inputs@{ self, home, nixos, master }:
+  outputs = inputs@{ self, home, nixos, master, qt515 }:
     let
       inherit (builtins) attrNames attrValues readDir;
       inherit (nixos) lib;
@@ -29,6 +30,7 @@
       pkgset = {
         osPkgs = pkgImport nixos;
         pkgs = pkgImport master;
+        qt515Pkgs = pkgImport qt515;
       };
 
     in
@@ -63,7 +65,10 @@
               (attrNames overlays)
               (name: (overlays."${name}" osPkgs osPkgs)."${name}");
         in
-        recursiveUpdate packages overlayPkgs;
+        recursiveUpdate
+          (
+            recursiveUpdate packages overlayPkgs
+          ) { qutebrowser = qt515Pkgs.qutebrowser; };
 
       nixosModules =
         let
