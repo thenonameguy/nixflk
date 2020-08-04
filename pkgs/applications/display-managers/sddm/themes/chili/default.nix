@@ -23,6 +23,7 @@ stdenv.mkDerivation {
     homepage = "https://github.com/MarianArlt/sddm-chili";
     maintainers = [ maintainers.nrdxp ];
     license = licenses.gpl3;
+    patforms = platforms.linux;
     inherit version;
   };
 }

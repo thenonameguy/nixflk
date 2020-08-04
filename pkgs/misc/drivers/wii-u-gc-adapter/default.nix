@@ -24,6 +24,7 @@ stdenv.mkDerivation {
     description = "Tool for using the Wii U GameCube Adapter on Linux";
     homepage = "https://github.com/ToadKing/wii-u-gc-adapter";
     maintainers = [ maintainers.nrdxp ];
+    platforms = platforms.linux;
     license = licenses.mit;
     inherit version;
   };
