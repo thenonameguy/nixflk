@@ -9,5 +9,7 @@ final: prev: {
       rev = "v${version}";
       hash = "sha256-iqNOLhNqj+ja0YIyVi/6gZXBYGN+eu02LUiUIwacSBQ=";
     };
+
+    meta.platforms = prev.stdenv.lib.platforms.linux;
   });
 }
