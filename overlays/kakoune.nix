@@ -7,9 +7,4 @@ final: prev: {
       kak-powerline
     ];
   };
-
-  # wrapper to specify config dir
-  kakoune-config = prev.writeShellScriptBin "k" ''
-    XDG_CONFIG_HOME=/etc/xdg exec ${final.kakoune}/bin/kak "$@"
-  '';
 }

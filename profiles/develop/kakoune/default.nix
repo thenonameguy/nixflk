@@ -21,4 +21,13 @@
     "xdg/kak/autoload/default".source =
       "${pkgs.kakoune-unwrapped}/share/kak/rc";
   };
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      # wrapper to specify config dir
+      kakoune-config = prev.writeShellScriptBin "k" ''
+        XDG_CONFIG_HOME=/etc/xdg exec ${final.kakoune}/bin/kak "$@"
+      '';
+    })
+  ];
 }
