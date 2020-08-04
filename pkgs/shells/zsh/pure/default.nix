@@ -24,6 +24,7 @@ stdenv.mkDerivation {
     homepage = "https://github.com/sindresorhus/pure";
     maintainers = [ maintainers.nrdxp ];
     license = licenses.mit;
+    platforms = platforms.unix;
     inherit version;
   };
 }
