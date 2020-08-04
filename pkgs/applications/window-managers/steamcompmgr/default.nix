@@ -14,7 +14,9 @@
 }:
 
 stdenv.mkDerivation {
-  name = "steamcompmgr";
+  pname = "steamcompmgr";
+  version = "c3855fcb";
+
   src = fetchFromGitHub {
     owner = "gamer-os";
     repo = "steamos-compositor-plus";
