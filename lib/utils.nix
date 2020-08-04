@@ -1,8 +1,18 @@
 { lib, ... }:
 let
-  inherit (builtins) attrNames isAttrs readDir listToAttrs;
+  inherit (builtins) attrNames attrValues isAttrs readDir listToAttrs;
 
-  inherit (lib) filterAttrs hasSuffix mapAttrs' nameValuePair removeSuffix;
+  inherit (lib)
+    collect
+    filterAttrs
+    filterAttrsRecursive
+    getName
+    hasSuffix
+    isDerivation
+    mapAttrs'
+    mapAttrs
+    nameValuePair
+    removeSuffix;
 
   # mapFilterAttrs ::
   #   (name -> value -> bool )
@@ -37,5 +47,29 @@ in
       name = removeSuffix ".nix" (baseNameOf path);
       value = import path;
     });
+
+  overlaysToPkgs = overlaysAttrs: pkgs:
+    let
+      overlayDrvs = mapAttrs (_: v: v pkgs pkgs) overlaysAttrs;
+
+      # some derivations fail to evaluate, simply remove them so we can move on
+      filterDrvs = filterAttrsRecursive
+        (_: v: (builtins.tryEval v).success)
+        overlayDrvs;
+
+      drvs = collect (isDerivation) filterDrvs;
+
+      # don't bother exporting a package if it's platform isn't supported
+      systemDrvs = builtins.filter
+        (drv: builtins.elem
+          pkgs.system
+          (drv.meta.platforms or [ ]))
+        drvs;
+
+      nvPairs = map
+        (drv: nameValuePair (getName drv) drv)
+        systemDrvs;
+    in
+    listToAttrs nvPairs;
 
 }
